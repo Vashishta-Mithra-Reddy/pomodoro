@@ -12,10 +12,21 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    backgroundColor: '#f5f5f5',
+    frame: true,
+    transparent: false,
+    titleBarStyle: 'default',
+    titleBarOverlay: {
+      color: '#f5f5f5',
+      symbolColor: '#463f3a'
+    },
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
+
+  // Remove the menu bar
+  mainWindow.setMenu(null);
 
   // and load the index.html of the app.
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
@@ -23,9 +34,6 @@ const createWindow = () => {
   } else {
     mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
   }
-
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
